@@ -1,0 +1,18 @@
+{% load mptt_tags %}
+
+<ul>
+    {% recursetree nodes %}
+        {% if node.level >= level_min %}
+        {% if not level_max or node.level <= level_max %}
+        <li {% if object = node.content_object %}class="current"{% endif %}>
+            <a href={{ node.content_object.get_absolute_url }}>{{ node.content_object }}</a>
+            {% if not node.is_leaf_node or not level_max or node.level|add:1 <= level_max %}
+            <ul class="children">
+                {{ children }}
+            </ul>
+            {% endif %}
+        </li>
+        {% endif %}
+        {% endif %}
+    {% endrecursetree %}
+</ul>

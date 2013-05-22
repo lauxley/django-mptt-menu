@@ -1,0 +1,14 @@
+{% load menu_tags %}<html>
+  <head>
+    <title>example_menu</title>
+  </head>
+  <div class="main">
+    <div class="title"><h1>Example Project</h1></div>
+    <div class="menu">
+      {% block menu %}{% show_menu level_max=1 %}{% endblock %}
+    </div>
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</html>
