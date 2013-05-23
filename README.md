@@ -1,7 +1,9 @@
-Lightweight and modular menu manager using mptt.
+Lightweight and modular menu manager using mptt for the Django framework.
+
+
+
 
 TODO:
 -----
-* cache
-* real README / docs
 * use resolve to determine object for menu if possible
+* benchmarks

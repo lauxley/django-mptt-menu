@@ -1,0 +1,8 @@
+include README.md
+include LICENSE.txt
+recursive-include docs *
+recursive-include build/fixtures *.json
+recursive-include build/locale *
+recursive-include build/static *
+recursive-include build/templates *.txt *.html *.xml *.js
+prune docs/build
