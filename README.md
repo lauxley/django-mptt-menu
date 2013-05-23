@@ -16,14 +16,16 @@ Install
 INSTALLED_APPS = (
     [...]
     'mptt',
-    'mpttmenu'
+    'mpttmenu',
+    [...]
+    )
 ```
 
 * run a syncdb
 
 ```python manage.py syncdb```
 
-* Additionally you can use [django-genericadmin](https://github.com/jschrewe/django-genericadmin)
+* Additionally you can use [django-genericadmin](https://github.com/jschrewe/django-genericadmin), if you want a bit more easy to use admin.
 
 Settings
 --------
@@ -31,13 +33,13 @@ Settings
 None of this settings is mandatory.
 
 * MENU_PROCESSOR_CLASS  
-  default : 'mpttmenu.processors.MenuProcessor' 
-  This is the python path of your menu processor, this is where you will implement all of your logic if you need to change the default behavior (by subclassing processors.MenuProcessor)
-  (but in most cases using the templatetag options should be enough). 
+  default : 'mpttmenu.processors.MenuProcessor'  
+  This is the python path of your menu processor, this is where you will implement all of your logic if you need to change the default behavior (by subclassing processors.MenuProcessor),
+  but in most cases using the templatetag options should be enough.  
 
 * MENU_CACHE_TIME  
-  default : 0 
-  In seconds 
+  default : 0  
+  In seconds  
 
 * MENU_ALLOWED_CONTENT_TYPES  
   default : ('mpttmenu/simplenode', )  
@@ -62,11 +64,11 @@ Methods you can override in your own processor:
 
 * determine_tree  
   This is were the real logic takes place, depending on the referenced object, this method will return the corresponding part of the menu tree. 
-  by default, returns the whole tree. 
+  By default, returns the whole tree. 
 
 * get_default_tree 
   This method is called if no object could be determined (probably on the home page for example), it also returns a part of the menu tree. 
-  by default, returns the whole tree. 
+  By default, returns the whole tree. 
 
 There are several convenient methods in the class to help you build the 2 last methods :
 > _get_all_nodes  
@@ -90,7 +92,7 @@ If you want to make the better of this app you can do two optionals things:
 For example if your menu is made of Sections (a MenuNode will reference a Section), do ```{% show_menu the_current_section %}``` 
 In some cases though you won't be able to pass it, if the referenced object is a SimpleNode (used as a static link) for example.
 
-* Add a backlink reference in your models if possible, it will avoid a query.
+* Add a [reverse generic relation](https://docs.djangoproject.com/en/dev/ref/contrib/contenttypes/#s-reverse-generic-relations) in your models if possible, it will avoid a query.
   ```python
   class MyModel(models.Model):
       [...]
