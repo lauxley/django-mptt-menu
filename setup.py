@@ -1,10 +1,10 @@
-"""Setup script for django_mptt_menu"""
+"""Setup script for django-mptt-menu"""
 from setuptools import setup
 from setuptools import find_packages
 
 
 setup(
-    name='django_mptt_menu',
+    name='django-mptt-menu',
     version='0.1',
     packages=find_packages(exclude=['test', 'tests',
                                     'example', 'demo']),
