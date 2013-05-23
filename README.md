@@ -8,7 +8,7 @@ Install
 
 * fetch the code
 
-pip install git+git://github.com/lauxley/django_mptt_menu.git
+```pip install git+git://github.com/lauxley/django_mptt_menu.git```
 
 * Add mpttmenu to settins.INSTALLED_APPS
 
