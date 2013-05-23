@@ -1,0 +1,6 @@
+*.pyc
+*~
+*#
+env
+build
+menu.db

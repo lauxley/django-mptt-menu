@@ -13,6 +13,7 @@ class SimpleNode(models.Model):
     """
     title = models.CharField(max_length=255)
     url = models.CharField(max_length=512, unique=True)
+    menu_node = generic.GenericRelation(MenuNode)
 
     def get_absolute_url(self):
         return self.url
