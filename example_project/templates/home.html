@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load menu_tags %}
+
+{% block menu %}{% show_menu level_max=0 %}{% endblock %}
 
 {% block content %}
 This is great.

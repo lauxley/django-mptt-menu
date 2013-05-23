@@ -9,6 +9,7 @@ sys.path.append(os.path.join(SITE_ROOT, '..'))
 
 ################################# MPTT-MENU SPECIFIC SETTINGS #################################
 MENU_ALLOWED_CONTENT_TYPES = ('mpttmenu/simplenode', 'example_app/examplemodel')
+MENU_CACHE_TIME = 0  # forever
 ############################################## ################################################
 
 DEBUG = True
@@ -130,8 +131,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.media",
                                "django.core.context_processors.static",
                                "django.core.context_processors.tz",
-                               "django.contrib.messages.context_processors.messages",
-                               "mpttmenu.context_processors.menu",
+                               "django.contrib.messages.context_processors.messages"
                                )
 
 

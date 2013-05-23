@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from django.core.cache import cache
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -45,5 +46,6 @@ class MenuNode(MPTTModel):
     def __unicode__(self):
         return u'%s : %s' % (self.content_type, self.content_object)
 
-    #def save():
-    # invalidate the cache
+    def save(self, *args, **kwargs):
+        cache.delete('menu')
+        return super(MenuNode, self).save()
