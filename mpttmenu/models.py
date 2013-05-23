@@ -6,22 +6,6 @@ from django.contrib.contenttypes import generic
 
 from mptt.models import MPTTModel, TreeForeignKey
 
-
-class SimpleNode(models.Model):
-    """
-    The simplest of objects to define a menu node
-    """
-    title = models.CharField(max_length=255)
-    url = models.CharField(max_length=512, unique=True)
-    menu_node = generic.GenericRelation(MenuNode)
-
-    def get_absolute_url(self):
-        return self.url
-
-    def __unicode__(self):
-        return unicode(self.title)
-
-
 class MenuNodeManager(models.Manager):
     def get_query_set(self):
         return super(MenuNodeManager, self).get_query_set().filter(active=True)
@@ -50,3 +34,18 @@ class MenuNode(MPTTModel):
     def save(self, *args, **kwargs):
         cache.delete('menu')
         return super(MenuNode, self).save()
+
+
+class SimpleNode(models.Model):
+    """
+    The simplest of objects to define a menu node
+    """
+    title = models.CharField(max_length=255)
+    url = models.CharField(max_length=512, unique=True)
+    menu_node = generic.GenericRelation(MenuNode)
+
+    def get_absolute_url(self):
+        return self.url
+
+    def __unicode__(self):
+        return unicode(self.title)
