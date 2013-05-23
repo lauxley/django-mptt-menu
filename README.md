@@ -30,17 +30,17 @@ Settings
 
 None of this settings is mandatory.
 
-* MENU_PROCESSOR_CLASS 
+* MENU_PROCESSOR_CLASS  
   default : 'mpttmenu.processors.MenuProcessor' 
   This is the python path of your menu processor, this is where you will implement all of your logic if you need to change the default behavior (by subclassing processors.MenuProcessor)
   (but in most cases using the templatetag options should be enough). 
 
-* MENU_CACHE_TIME 
+* MENU_CACHE_TIME  
   default : 0 
   In seconds 
 
-* MENU_ALLOWED_CONTENT_TYPES 
-  default : ('mpttmenu/simplenode', ) 
+* MENU_ALLOWED_CONTENT_TYPES  
+  default : ('mpttmenu/simplenode', )  
   If you choose to use django-genericadmin, this is the list of available content_types for models that can be referenced by the MenuNode. 
   Note that SimpleNode is NOT an abstract model, you don't need to subclass it, it is just the simplest Model to define a menu node (contain a title and an url). 
 
@@ -69,17 +69,17 @@ Methods you can override in your own processor:
   by default, returns the whole tree. 
 
 There are several convenient methods in the class to help you build the 2 last methods :
-- _get_all_nodes
-- _get_root_nodes
-- _get_branch_nodes
-- _get_chidren_nodes
-- _get_ancestors_nodes
-- _get_root_and_sibblings_nodes
-- _get_root_and_children_nodes
+> _get_all_nodes  
+> _get_root_nodes  
+> _get_branch_nodes  
+> _get_chidren_nodes  
+> _get_ancestors_nodes  
+> _get_root_and_sibblings_nodes  
+> _get_root_and_children_nodes  
 
 * get_cache_key 
-  Override this if you need to change the cache key 
-  by default it is ```python 'menu%s' % unicode(self.object or '')```
+  Override this if you need to change the cache key  
+  By default it returns : ```python 'menu%s' % unicode(self.object or '')```
 
 Optional
 --------
