@@ -1,9 +1,8 @@
-{% load cache mptt_tags %}
+{% load mptt_tags %}
 
-{% cache cache_time object %}
 <ul>
     {% recursetree nodes %}
-        <li {% if object = node.content_object %}class="current"{% elif node.parent and object = node.parent.content_object %}class="current_parent"{% endif %}>
+        <li {% if current = node.content_object %}class="current"{% elif node.parent and current = node.parent.content_object %}class="current_parent"{% endif %}>
             <a href={{ node.content_object.get_absolute_url }}>{{ node.content_object }}</a>
             <ul class="children">
                 {{ children }}
@@ -11,4 +10,3 @@
         </li>
     {% endrecursetree %}
 </ul>
-{% endcache %}

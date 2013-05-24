@@ -1,10 +1,8 @@
-from django.conf import settings
-from django.core.cache import cache
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
 from mpttmenu.models import MenuNode
-from mpttmenu import default_settings
+from mpttmenu.utils import MenuCache
 
 MENU_MAX_LEVEL = 64
 
@@ -20,6 +18,7 @@ class MenuProcessor(object):
         self.node = None
         self.level_min = level_min
         self.level_max = level_max
+        self.cache = MenuCache()
 
         self.determine_object_from_context()
         self.determine_node_from_object()
@@ -70,14 +69,10 @@ class MenuProcessor(object):
         """
         return self._get_all_nodes()
 
-    def get_cache_key(self):
-        # TODO: can we use anything as a cache key, or should we slugify it ?
-        return 'menu%s' % unicode(self.object or '')
-
     ################################################
 
     def get_nodes(self):
-        nodes = cache.get(self.get_cache_key())
+        nodes = self.cache[self.object]
         if not nodes:
             try:
                 nodes = self.determine_tree()
@@ -86,7 +81,7 @@ class MenuProcessor(object):
                 # let's use the fallback
                 nodes = self.get_default_tree()
             nodes = nodes.filter(level__range=[self.level_min, self.level_max])
-            cache.set(self.get_cache_key(), nodes, getattr(settings, 'MENU_CACHE_TIME', default_settings.MENU_CACHE_TIME))
+            self.cache[self.object] = nodes
         return nodes
 
     ################# convenient methods ################

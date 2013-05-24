@@ -9,8 +9,11 @@ sys.path.append(os.path.join(SITE_ROOT, '..'))
 
 ################################# MPTT-MENU SPECIFIC SETTINGS #################################
 MENU_ALLOWED_CONTENT_TYPES = ('mpttmenu/simplenode', 'example_app/examplemodel')
-MENU_CACHE_TIME = 0  # forever
 MENU_PROCESSOR_CLASS = 'example_app.processors.ExampleProcessor'
+MENU_CACHE_TIMEOUT = None  # Use 'default' if you want to use the default cache time for MENU_CACHE_BACKEND, None is forever
+
+# MENU_CACHE_BACKEND = 'default'
+# MENU_CACHE_KEY = 'menu'
 ############################################## ################################################
 
 DEBUG = True
@@ -163,8 +166,8 @@ INSTALLED_APPS = (
     'mptt',
 
     # uncomment these if you want to try them out
-    #'genericadmin',
-    #'django_mptt_admin',
+    'genericadmin',
+    'django_mptt_admin',
 
     'mpttmenu',
     'example_app',

@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
-from django.core.cache import cache
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 from mptt.models import MPTTModel, TreeForeignKey, TreeManager
+
+from mpttmenu.utils import MenuCache
 
 
 class MenuNodeManager(TreeManager):
@@ -33,7 +34,7 @@ class MenuNode(MPTTModel):
         return u'%s : %s' % (self.content_type, self.content_object)
 
     def save(self, *args, **kwargs):
-        cache.delete('menu')
+        MenuCache().invalidate()
         return super(MenuNode, self).save()
 
 

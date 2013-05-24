@@ -26,10 +26,15 @@ INSTALLED_APPS = (
 ```python manage.py syncdb```
 
 * Additionally you can use [django-genericadmin](https://github.com/jschrewe/django-genericadmin)
-* And [django-mptt-admin](https://github.com/leukeleu/django-mptt-admin), both improve the admin experience
+* And [django-mptt-admin](https://github.com/leukeleu/django-mptt-admin), both improve the admin experience  
 
-Settings
---------
+* add the {% show_menu %} tag in your base template  
+* add a few entries in the admin...  
+  
+here you go..
+
+Configuration
+=============
 
 None of this settings is mandatory.
 
@@ -38,9 +43,19 @@ None of this settings is mandatory.
   This is the python path of your menu processor, this is where you will implement all of your logic if you need to change the default behavior (by subclassing processors.MenuProcessor),
   but in most cases using the templatetag options should be enough.  
 
+* MENU_CACHE_BACKEND
+  default : 'default'
+  If you want to use a specific cache backend for the menu, changes this to its key.
+
 * MENU_CACHE_TIME  
-  default : 0  
-  In seconds  
+  default : 'default'  
+  'default' means to use the default value from the given cache backend;  
+  None means forever;  
+  Otherwise the value is in seconds.  
+
+* MENU_CACHE_KEY  
+  default : 'menu'  
+  the key used to store the menu in the cache, change this if you already have a 'menu' key in your cache.
 
 * MENU_ALLOWED_CONTENT_TYPES  
   default : ('mpttmenu/simplenode', )  
@@ -48,7 +63,10 @@ None of this settings is mandatory.
   Note that SimpleNode is NOT an abstract model, you don't need to subclass it, it is just the simplest Model to define a menu node (contains a title and an url). 
 
 
-Overriding the Processor
+Advanced usage
+==============
+
+Overriding the processor
 ------------------------
 
 If you need to change the default behavior of the menu you can override the default menu processor to make it show only a part of the tree. 
@@ -84,8 +102,8 @@ There are several convenient methods in the class to help you build the 2 last m
   Override this if you need to change the cache key  
   By default it returns : ```python 'menu%s' % unicode(self.object or '')```
 
-Optional
---------
+Optimisation
+------------
 
 If you want to make the better of this app you can do two optionals things:
 
@@ -99,7 +117,23 @@ In some cases though you won't be able to pass it, if the referenced object is a
       [...]
       menu_node = generic.GenericRelation(MenuNode)
   ```
+* Also, you can override the template by creating a template with higher precedence in /mpttmenu/menu.html.  
+  The default template looks like this:  
 
+```html
+{% load mptt_tags %}
+
+<ul>
+    {% recursetree nodes %}
+        <li {% if current = node.content_object %}class="current"{% elif node.parent and current = node.parent.content_object %}class="current_parent"{% endif %}>
+            <a href={{ node.content_object.get_absolute_url }}>{{ node.content_object }}</a>
+            <ul class="children">
+                {{ children }}
+            </ul>
+        </li>
+    {% endrecursetree %}
+</ul>
+```
 
 TODO:
 =====
