@@ -108,8 +108,9 @@ Optimisation
 
 If you want to make the better of this app you can do two optionals things:
 
-* Pass the referenced object to the show_menu template tag whenever possible, it will avoid the processor to try to guess it.
-For example if your menu is made of Sections (a MenuNode will reference a Section), do ```{% show_menu the_current_section %}``` 
+* Pass the referenced object to the show_menu template tag whenever possible, it will avoid the processor to try to guess it, resulting in a lot of queries..
+For example if your menu is made of Sections (a MenuNode will reference a Section), do ```{% show_menu object=the_current_section %}```
+If you know for a fact that the page doesn't have any MenuNode associated, you can pass object=None.
 In some cases though you won't be able to pass it, if the referenced object is a SimpleNode (used as a static link) for example.
 
 * Add a [reverse generic relation](https://docs.djangoproject.com/en/dev/ref/contrib/contenttypes/#s-reverse-generic-relations) in your models if possible, it will avoid a query.

@@ -12,9 +12,11 @@ class MenuProcessor(object):
     This class is used to build the menu tree from the context
     its goal is to remove the logic from the template
     """
-    def __init__(self, context, obj=None, level_min=0, level_max=MENU_MAX_LEVEL):
+    def __init__(self, context, level_min=0, level_max=MENU_MAX_LEVEL, **kwargs):
         self.context = context
-        self.object = obj
+
+        self.object_passed = 'object' in kwargs
+        self.object = kwargs.get('object', None)
         self.node = None
         self.level_min = level_min
         self.level_max = level_max
@@ -27,16 +29,17 @@ class MenuProcessor(object):
     def determine_object_from_context(self):
         """
         Attempt to find the current object from the datas we have
-        It is recommanded to pass the obj parameter whenever possible (always!) to avoid a useless query
+        It is recommanded to pass the object parameter whenever possible (always!) to avoid some useless queries
         or to override this method to match your code/logic
         """
-        self.object = self.object or self.context.get('object', None)  # could be dangerous if object is not used in the default way
-        if not self.object:
-            # is there a better way to do this ? with resolve ?
-            l = [m for m in MenuNode.tree.all() if m.content_object.get_absolute_url() == self.context['view'].request.path]
-            if l:
-                self.node = l[0]  # avoid doing anything in determine_node_from_object if possible
-                self.object = self.object.content_object
+        if not self.object_passed:
+            self.object = self.object or self.context.get('object', None)  # could be dangerous if object is not used in the default way
+            if not self.object:
+                # is there a better way to do this ? with resolve ?
+                l = [m for m in MenuNode.tree.all() if m.content_object.get_absolute_url() == self.context['view'].request.path]
+                if l:
+                    self.node = l[0]  # avoid doing anything in determine_node_from_object if possible
+                    self.object = self.object.content_object
 
     def determine_node_from_object(self):
         """
@@ -80,7 +83,7 @@ class MenuProcessor(object):
                 # we have no node, we are probably in a page not present in the menu
                 # let's use the fallback
                 nodes = self.get_default_tree()
-            nodes = nodes.filter(level__range=[self.level_min, self.level_max])
+            nodes = nodes.filter(level__range=[self.level_min, self.level_max]).prefetch_related('parent', 'content_object')
             self.cache[self.object] = nodes
         return nodes
 

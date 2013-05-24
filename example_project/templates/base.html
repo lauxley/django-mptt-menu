@@ -2,13 +2,15 @@
   <head>
     <title>example_menu</title>
   </head>
+  <body>
   <div class="main">
     <div class="title"><h1><a href="{% url 'home' %}">Example Project</a></h1></div>
     <div class="menu">
-      {% block menu %}{% show_menu level_max=1 %}{% endblock %}
+      {% block menu %}{% show_menu level_max=1 obj=object %}{% endblock %}
     </div>
     <div class="content">
       {% block content %}{% endblock %}
     </div>
   </div>
+  </body>
 </html>
