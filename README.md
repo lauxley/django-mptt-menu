@@ -86,7 +86,7 @@ Methods you can override in your own processor:
   By default, returns the whole tree. 
 
 * get_default_tree  
-  This method is called if no object could be determined (probably on the home page for example), it also returns a part of the menu tree. 
+  This method is called if no object could be determined (on the home page for example), it also returns a part of the menu tree. 
   By default, returns the whole tree. 
 
 There are several convenient methods in the class to help you build the 2 last methods :
@@ -94,7 +94,7 @@ There are several convenient methods in the class to help you build the 2 last m
 > _get_root_nodes  
 > _get_branch_nodes  
 > _get_root_and_branch_nodes  
-> _get_chidren_nodes  
+> _get_children_nodes  
 > _get_ancestors_nodes  
 > _get_root_and_sibblings_nodes  
 > _get_root_and_children_nodes  
@@ -143,3 +143,4 @@ TODO:
 * benchmarks
 * get rid of some parenthesis here (they are annoying).
 * show_breadcrumbs templatetag
+* tests
