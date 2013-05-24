@@ -4,9 +4,10 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from mptt.models import MPTTModel, TreeForeignKey
+from mptt.models import MPTTModel, TreeForeignKey, TreeManager
 
-class MenuNodeManager(models.Manager):
+
+class MenuNodeManager(TreeManager):
     def get_query_set(self):
         return super(MenuNodeManager, self).get_query_set().filter(active=True)
 
@@ -23,7 +24,7 @@ class MenuNode(MPTTModel):
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
-    objects = MenuNodeManager()
+    tree = MenuNodeManager()
 
     class MPTTMeta:
         order_insertion_by = ['rank']

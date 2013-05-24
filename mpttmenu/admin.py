@@ -5,23 +5,23 @@ from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 
 from mpttmenu.models import MenuNode, SimpleNode
+from mpttmenu import default_settings
 
-try:
-    from genericadmin.admin import GenericTabularInline
-    from genericadmin.admin import GenericAdminModelAdmin as ModelAdmin
-except ImportError,e:
-    from django.contrib.contenttypes.generic import GenericTabularInline
-    from django.contrib.admin import ModelAdmin
+if 'genericadmin' in settings.INSTALLED_APPS:
+    from genericadmin.admin import GenericAdminModelAdmin
+else:
+    class GenericAdminModelAdmin():
+        pass
+
+if 'django_mptt_admin' in settings.INSTALLED_APPS:
+    from django_mptt_admin.admin import DjangoMpttAdmin
+else:
+    class DjangoMpttAdmin():
+        pass
 
 
-class MenuNodeInline(GenericTabularInline):
-    model = MenuNode
-
-
-class MenuNodeAdmin(MPTTModelAdmin, ModelAdmin):
-    mptt_level_indent = 20
-    inlines = [MenuNodeInline]
-    content_type_whitelist = getattr(settings, 'MENU_ALLOWED_CONTENT_TYPES', ('mpttmenu/simplenode', ))
+class MenuNodeAdmin(GenericAdminModelAdmin, DjangoMpttAdmin, MPTTModelAdmin):
+    content_type_whitelist = getattr(settings, 'MENU_ALLOWED_CONTENT_TYPES', default_settings.MENU_ALLOWED_CONTENT_TYPES)
 
 admin.site.register(SimpleNode)
 admin.site.register(MenuNode, MenuNodeAdmin)

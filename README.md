@@ -25,7 +25,8 @@ INSTALLED_APPS = (
 
 ```python manage.py syncdb```
 
-* Additionally you can use [django-genericadmin](https://github.com/jschrewe/django-genericadmin), if you want a bit more easy to use admin.
+* Additionally you can use [django-genericadmin](https://github.com/jschrewe/django-genericadmin)
+* And [django-mptt-admin](https://github.com/leukeleu/django-mptt-admin), both improve the admin experience
 
 Settings
 --------

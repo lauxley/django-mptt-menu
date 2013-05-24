@@ -10,6 +10,7 @@ sys.path.append(os.path.join(SITE_ROOT, '..'))
 ################################# MPTT-MENU SPECIFIC SETTINGS #################################
 MENU_ALLOWED_CONTENT_TYPES = ('mpttmenu/simplenode', 'example_app/examplemodel')
 MENU_CACHE_TIME = 0  # forever
+MENU_PROCESSOR_CLASS = 'example_app.processors.ExampleProcessor'
 ############################################## ################################################
 
 DEBUG = True
@@ -111,6 +112,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'example_project.urls'
@@ -134,6 +136,18 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.contrib.messages.context_processors.messages"
                                )
 
+# INTERNAL_IPS = ('127.0.0.1',)
+# DEBUG_TOOLBAR_PANELS = (
+#     'debug_toolbar.panels.version.VersionDebugPanel',
+#     'debug_toolbar.panels.timer.TimerDebugPanel',
+#     'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+#     'debug_toolbar.panels.headers.HeaderDebugPanel',
+#     'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+#     'debug_toolbar.panels.template.TemplateDebugPanel',
+#     'debug_toolbar.panels.sql.SQLDebugPanel',
+#     'debug_toolbar.panels.signals.SignalDebugPanel',
+#     'debug_toolbar.panels.logger.LoggingPanel',
+# )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -147,9 +161,15 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'mptt',
-    'genericadmin',
+
+    # uncomment these if you want to try them out
+    #'genericadmin',
+    #'django_mptt_admin',
+
     'mpttmenu',
-    'example_app'
+    'example_app',
+
+    #'debug_toolbar'
 )
 
 # A sample logging configuration. The only tangible logging

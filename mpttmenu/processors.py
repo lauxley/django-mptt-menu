@@ -99,7 +99,10 @@ class MenuProcessor(object):
         return MenuNode.tree.root_nodes()
 
     def _get_branch_nodes(self):
-        return self.node.get_root().get_descendants()
+        return self.node.get_root().get_descendants(include_self=True)
+
+    def _get_root_and_branch_nodes(self):
+        return MenuNode.tree.filter(Q(level=0) | Q(id__in=self.node.get_root().get_descendants().values_list('id', flat=True)))
 
     def _get_root_and_sibblings_nodes(self):
         return MenuNode.tree.filter(Q(level=0) | Q(parent=self.node.parent))
