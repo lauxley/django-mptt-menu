@@ -99,9 +99,6 @@ There are several convenient methods in the class to help you build the 2 last m
 > _get_root_and_sibblings_nodes  
 > _get_root_and_children_nodes  
 
-* get_cache_key 
-  Override this if you need to change the cache key  
-  By default it returns : ```python 'menu%s' % unicode(self.object or '')```
 
 Optimisation
 ------------
