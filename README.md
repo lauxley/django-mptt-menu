@@ -1,4 +1,8 @@
-Lightweight and modular menu manager using [mptt](http://django-mptt.github.io/django-mptt/) for the [Django](https://www.djangoproject.com) framework.
+Lightweight and modular menu manager using [mptt](http://django-mptt.github.io/django-mptt/) for the [Django](https://www.djangoproject.com) framework.  
+
+The goal of django-mptt-menu is to be as fast as possible and yet allow the menu to be built from different sources (different models, static urls..), 
+to resolve this, we use django's contenttypes framework.  It's ok because most of the time a menu can be heavily cached forever.  
+But if you don't need this level of modularity, don't use this :)  
 
 Usage
 =====
