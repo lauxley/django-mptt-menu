@@ -10,7 +10,7 @@ Install
 
 ```pip install git+git://github.com/lauxley/django_mptt_menu.git```
 
-* Add mpttmenu to settins.INSTALLED_APPS
+* Add mptt and mpttmenu to settings.INSTALLED_APPS
 
 ```python
 INSTALLED_APPS = (
@@ -44,7 +44,7 @@ None of this settings is mandatory.
 * MENU_ALLOWED_CONTENT_TYPES  
   default : ('mpttmenu/simplenode', )  
   If you choose to use django-genericadmin, this is the list of available content_types for models that can be referenced by the MenuNode. 
-  Note that SimpleNode is NOT an abstract model, you don't need to subclass it, it is just the simplest Model to define a menu node (contain a title and an url). 
+  Note that SimpleNode is NOT an abstract model, you don't need to subclass it, it is just the simplest Model to define a menu node (contains a title and an url). 
 
 
 Overriding the Processor
