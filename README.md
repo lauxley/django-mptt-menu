@@ -71,7 +71,8 @@ Overriding the processor
 
 If you need to change the default behavior of the menu you can override the default menu processor to make it show only a part of the tree. 
 Of course you could probably put the logic in the template, or even in javascript, but it is a better practice to use the tools that the MenuProcessor offers you,
-it means less queries, and a cleaner template code.
+it means less queries, and a cleaner template code.  
+If you do override the processor, don't forget to set MENU_PROCESSOR_CLASS accordingly.
 
 Methods you can override in your own processor: 
 
@@ -93,6 +94,7 @@ There are several convenient methods in the class to help you build the 2 last m
 > _get_all_nodes  
 > _get_root_nodes  
 > _get_branch_nodes  
+> _get_root_and_branch_nodes  
 > _get_chidren_nodes  
 > _get_ancestors_nodes  
 > _get_root_and_sibblings_nodes  
