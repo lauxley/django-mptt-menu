@@ -25,8 +25,7 @@ INSTALLED_APPS = (
 
 ```python manage.py syncdb```
 
-* Additionally you can use [django-genericadmin](https://github.com/jschrewe/django-genericadmin)
-* And [django-mptt-admin](https://github.com/leukeleu/django-mptt-admin), both improve the admin experience  
+* Additionally you can use [django-genericadmin](https://github.com/jschrewe/django-genericadmin) and [django-mptt-admin](https://github.com/leukeleu/django-mptt-admin), both improve the admin experience  
 
 * add the {% show_menu %} tag in your base template  
 * add a few entries in the admin...  
@@ -47,7 +46,7 @@ None of this settings is mandatory.
   default : 'default'
   If you want to use a specific cache backend for the menu, changes this to its key.
 
-* MENU_CACHE_TIME  
+* MENU_CACHE_TIMEOUT  
   default : 'default'  
   'default' means to use the default value from the given cache backend;  
   None means forever;  
@@ -86,7 +85,7 @@ Methods you can override in your own processor:
   This is were the real logic takes place, depending on the referenced object, this method will return the corresponding part of the menu tree. 
   By default, returns the whole tree. 
 
-* get_default_tree 
+* get_default_tree  
   This method is called if no object could be determined (probably on the home page for example), it also returns a part of the menu tree. 
   By default, returns the whole tree. 
 
