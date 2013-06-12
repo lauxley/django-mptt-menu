@@ -36,7 +36,13 @@ class MenuProcessor(object):
             self.object = self.object or self.context.get('object', None)  # could be dangerous if object is not used in the default way
             if not self.object:
                 # is there a better way to do this ? with resolve ?
-                l = [m for m in MenuNode.tree.all() if m.content_object.get_absolute_url() == self.context['view'].request.path]
+                try:
+                    path = self.context['view'].request.path
+                except (KeyError, AttributeError):
+                    # in case of django < 1.5
+                    path = self.context['request_path']
+
+                l = [m for m in MenuNode.tree.all() if m.content_object.get_absolute_url() == path]
                 if l:
                     self.node = l[0]  # avoid doing anything in determine_node_from_object if possible
                     self.object = self.object.content_object
@@ -52,7 +58,8 @@ class MenuProcessor(object):
             return
         else:
             if hasattr(self.object, 'menu_node'):
-                self.node = self.object.menu_node
+                # This is a generic FOREIGN KEY, so it is safe to do a simple get()
+                self.node = self.object.menu_node.get()
             else:
                 self.node = MenuNode.tree.get(content_type=ContentType.objects.get_for_model(self.object.__class__),
                                               object_id=self.object.id)
@@ -83,7 +90,8 @@ class MenuProcessor(object):
                 # we have no node, we are probably in a page not present in the menu
                 # let's use the fallback
                 nodes = self.get_default_tree()
-            nodes = nodes.filter(level__range=[self.level_min, self.level_max]).prefetch_related('parent', 'content_object')
+
+            nodes = nodes.filter(level__range=[self.level_min, self.level_max]).select_related('parent', 'content_object')
             self.cache[self.object] = nodes
         return nodes
 
@@ -108,8 +116,11 @@ class MenuProcessor(object):
     def _get_root_and_children_nodes(self):
         return MenuNode.tree.filter(Q(level=0) | Q(parent=self.node))
 
-    def _get_chidren_nodes(self):
+    def _get_children_nodes(self):
         return self.node.children.all()
 
     def _get_ancestors_nodes(self):
-        return self.node.ancestors.all()
+        return self.node.get_ancestors()
+
+    def _get_descendants_nodes(self):
+        return self.node.get_descendants()
