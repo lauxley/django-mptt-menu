@@ -141,7 +141,7 @@ In some cases though you won't be able to pass it, if the referenced object is a
 TODO:
 =====
 * use resolve to determine object for menu if possible
-* benchmarks
 * get rid of some parenthesis here (they are annoying).
 * show_breadcrumbs templatetag
-* tests
+* **tests**
+* cache the whole template (problems : can't cache forever with the cache templatetag and not that easy to invalidate if need be - add a decorator to show_menu ?!)
